@@ -8,7 +8,7 @@ const searchNFT = async (ownerAddress) => {
 
     let searchConfig = {
         method: 'get',
-        url: `https://api.underdogprotocol.com/v2/projects/c/4/nfts/search?search=${ownerAddress}`,
+        url: `https://api.underdogprotocol.com/v2/projects/c/5/nfts/search?search=${ownerAddress}`,
         headers: {
             'Authorization': `Bearer ${token}`
         }

@@ -72,7 +72,7 @@ app.post('/mint', async (req, res) => {
 
     let config = {
         method: 'post',
-        url: 'https://api.underdogprotocol.com/v2/projects/c/4/nfts',
+        url: 'https://api.underdogprotocol.com/v2/projects/c/5/nfts',
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
