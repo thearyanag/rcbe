@@ -30,10 +30,18 @@ app.get('/getData', async (req, res) => {
 });
 
 app.post('/mint', async (req, res) => {
-    const degenData = req.body
-    const { wallet } = req.query
+    const reqBody = req.body
+
+
+    let wallet = reqBody.params.wallet;
+    let attributes = reqBody.data.degenData;
 
     const walletdata = await searchNFT(wallet)
+
+    console.log(attributes)
+    console.log(wallet)
+
+    console.log(walletdata)
 
     if (walletdata) {
         res.send(walletdata)
@@ -42,14 +50,14 @@ app.post('/mint', async (req, res) => {
 
     let receiverAddress = wallet;
 
-    let imageId = degenData.status;
+    let imageId = attributes.totalScore;
 
     const token = process.env.UNDERDOG_PROTOCOL_API_KEY;
 
     let url = "";
-    if (imageId == 3) {
+    if (imageId < 6) {
         url = "https://i.imgur.com/oWx6DKY.png"
-    } else if (imageId == 2) {
+    } else if (imageId <9) {
         url = "https://i.imgur.com/s2qKwWx.png"
     } else {
         url = "https://i.imgur.com/bmFcMj1.png"
@@ -59,7 +67,7 @@ app.post('/mint', async (req, res) => {
         "name": `My Report Card`,
         "image": url,
         "receiverAddress": receiverAddress,
-        "attributes": degenData,
+        attributes
     });
 
     let config = {
@@ -72,7 +80,10 @@ app.post('/mint', async (req, res) => {
         data: metadata
     };
 
+    console.log(config)
+
     const { data } = await axios(config)
+    console.log(data)
 
     res.status(200)
 })
