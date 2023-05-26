@@ -32,9 +32,11 @@ app.get('/getData', async (req, res) => {
 app.post('/mint', async (req, res) => {
     const reqBody = req.body
 
+    console.log(reqBody)
+
 
     let wallet = reqBody.params.wallet;
-    let attributes = reqBody.data.degenData;
+    let attributes = reqBody.data;
 
     const walletdata = await searchNFT(wallet)
 
@@ -85,7 +87,9 @@ app.post('/mint', async (req, res) => {
     const { data } = await axios(config)
     console.log(data)
 
-    res.status(200)
+    res.status(200).send({
+        "wallet": wallet,
+    })
 })
 
 app.listen(port, () => {
