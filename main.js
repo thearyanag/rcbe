@@ -3,7 +3,9 @@ const onchainData = require('./functions/getOnchainData')
 const searchNFT = require('./functions/searchNFT');
 const axios = require('axios')
 
-const app = express()
+const app = express({
+    logger: true
+})
 require('dotenv').config()
 app.use(express.json({limit: '2mb', extended: true}));
 app.use(function (req, res, next) {
@@ -13,7 +15,6 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
-
 const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
@@ -74,7 +75,7 @@ app.post('/mint', async (req, res) => {
 
     let config = {
         method: 'post',
-        url: 'https://api.underdogprotocol.com/v2/projects/c/5/nfts',
+        url: 'https://api.underdogprotocol.com/v2/projects/c/6/nfts',
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
