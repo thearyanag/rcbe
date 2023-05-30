@@ -14,33 +14,52 @@ const getProgramsInteracted = async (ownerAddress) => {
     let type = {};
     let length = 0;
 
+    sig:
     while (signatures.length > 0) {
         const { data } = await axios.get(url + lastSig)
-    
+
         length += data.length;
-        
+
         if (data.length == 0) {
             break;
         }
 
+
         for (let i = 0; i < data.length; i++) {
             programs[data[i].source] = 0;
             type[data[i].type] = 0;
+
+            
+            let dateOfTx = new Date(data[0].timestamp * 1000);
+            let dateNow = new Date().getTime();
+
+            // break;
+            if (dateNow - dateOfTx.getTime() > 1000 * 60 * 60 * 24 * 90) {
+                break sig
+            }
         }
 
         for (let i = 0; i < data.length; i++) {
             programs[data[i].source] += 1;
             type[data[i].type] += 1;
+
+
+            let dateOfTx = new Date(data[0].timestamp * 1000);
+            let dateNow = new Date().getTime();
+
+            if (dateNow - dateOfTx.getTime() > 1000 * 60 * 60 * 24 * 90) {
+                break sig
+            }
         }
 
         let lastTx = data[data.length - 1];
         lastSig = lastTx.signature;
     }
-    
+
     return {
         programs,
         type,
-        total : length
+        total: length
     }
 }
 

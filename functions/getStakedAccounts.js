@@ -70,7 +70,7 @@ const getTokenMetadata = async (mintAddress) => {
             mintName.push(data[i].onChainMetadata.metadata.data.name);
         } else if(data[i].offChainMetadata.metadata != null) {
             mintName.push(data[i].offChainMetadata.metadata.name);
-        } else {
+        } else if(data[i].legacyMetadata != null) {
             mintName.push(data[i].legacyMetadata.name);
         }
     }
