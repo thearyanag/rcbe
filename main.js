@@ -7,13 +7,13 @@ const app = express({
     logger: true
 })
 require('dotenv').config()
-app.use(express.json({limit: '2mb', extended: true}));
+app.use(express.json({ limit: '2mb', extended: true }));
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    next();
 });
 const port = process.env.PORT || 3000
 
@@ -30,13 +30,23 @@ app.get('/getData', async (req, res) => {
 
 });
 
+// app.get('/callback' , async (req, res) => {
+
 app.post('/mint', async (req, res) => {
     const reqBody = req.body
+    console.log(req.query)
 
     console.log(reqBody)
 
+    let wallet;
 
-    let wallet = reqBody.params.wallet;
+    try {
+        wallet = reqBody.params.wallet
+    } catch {
+        console.log("hey")
+        wallet = req.query.wallet
+    }
+
     let attributes = reqBody.data;
 
     const walletdata = await searchNFT(wallet)
@@ -60,7 +70,7 @@ app.post('/mint', async (req, res) => {
     let url = "";
     if (imageId < 6) {
         url = "https://i.imgur.com/oWx6DKY.png"
-    } else if (imageId <9) {
+    } else if (imageId < 9) {
         url = "https://i.imgur.com/s2qKwWx.png"
     } else {
         url = "https://i.imgur.com/bmFcMj1.png"
