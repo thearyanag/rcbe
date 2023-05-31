@@ -24,6 +24,9 @@ app.get('/', (req, res) => {
 app.get('/getData', async (req, res) => {
     const { wallet } = req.query
 
+    console.log(wallet)
+    
+
     const data = await onchainData(wallet)
 
     res.send(data)

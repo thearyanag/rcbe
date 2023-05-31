@@ -13,6 +13,7 @@ const getProgramsInteracted = async (ownerAddress) => {
     let programs = {};
     let type = {};
     let length = 0;
+    let noOfPrograms = 0;
 
     sig:
     while (signatures.length > 0) {
@@ -40,6 +41,7 @@ const getProgramsInteracted = async (ownerAddress) => {
         }
 
         for (let i = 0; i < data.length; i++) {
+            noOfPrograms += 1;
             programs[data[i].source] += 1;
             type[data[i].type] += 1;
 
@@ -48,6 +50,10 @@ const getProgramsInteracted = async (ownerAddress) => {
             let dateNow = new Date().getTime();
 
             if (dateNow - dateOfTx.getTime() > 1000 * 60 * 60 * 24 * 90) {
+                break sig
+            }
+
+            if(noOfPrograms > 1000) {
                 break sig
             }
         }
@@ -65,3 +71,8 @@ const getProgramsInteracted = async (ownerAddress) => {
 
 
 module.exports = getProgramsInteracted;
+
+// sKWANKcXWytfFPWkzufyRQE3jpY9LkPReonhpTZtRjn
+// xKWANGxA9Wwzf1ic2Ur864QFuqmDdGyExzusoLVEgsh
+// DuSG1aooEgyCB1yDbLKFKdexeQYHPgfExmBQFD7bx8JL
+// 3PKhzE9wuEkGPHHu2sNCvG86xNtDJduAcyBPXpE6cSNt

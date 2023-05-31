@@ -19,17 +19,25 @@ async function getWalletAge(address, beforeSig) {
             new PublicKey(address),
             before
         );
-        if (counter == 0) {
-            firstSig = sigs[0];
-        }
+        // console.log(sigs);
         if (sigs.length == 0) {
             break;
+        }
+        if (counter == 0) {
+            firstSig = sigs[0];
         }
         lastSig = sigs[sigs.length - 1];
         before = { before: lastSig.signature };
         counter++;
     }
-    lastSig.signature;
+
+    if(!firstSig.signature) {
+        return {
+            firstDate: "0",
+            age: "0",
+            lastDate: "0",
+        }
+    }
 
     const firstTx = await connection.getParsedTransaction(lastSig.signature , { "maxSupportedTransactionVersion": 0});
     const lastTx = await connection.getParsedTransaction(firstSig.signature , { "maxSupportedTransactionVersion": 0});

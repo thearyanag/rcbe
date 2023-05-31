@@ -5,10 +5,10 @@ const getWalletAge = require('./getWalletAge');
 
 const getOnchainData = async (address) => {
 
+    const walletAge = await getWalletAge(address);
     const nftStats = await getNFTStats(address);
     const programsInteracted = await getProgramsInteracted(address);
     const stakedAccounts = await getStakedAccounts(address);
-    const walletAge = await getWalletAge(address);
 
     let nftScore, programScore, stakedScore, walletAgeScore;
 
